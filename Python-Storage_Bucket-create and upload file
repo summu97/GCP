@@ -1,3 +1,8 @@
+NOTE: 
+1. run cmnd: pip install google-cloud-storage
+2. python file_name.py
+
+
 open CLOUD SHELL-->Open Editor-->create folder-->storage-bk.py-->create file-->bk.py-->copy & paste below code-->create file-->key.json-->copy paste content of service account key
 open-new_terminal-->cd storage-bk.py-->python bk.py
 NOTE:
