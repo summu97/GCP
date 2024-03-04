@@ -1,0 +1,12 @@
+Q. Set Environment Paths for multiple python installations.
+   go to search bar-->Edit the system environment variables-->Environment variables-->select system variables path or user variables path(your choice)
+   go to path and give the path of your python and move up or down for preference.
+
+Q. To know the default python version in windows.
+   python --version
+
+Q. Check the Python installations in your system.
+   where python
+
+Q. To get the system configuration.
+   dxdiag
