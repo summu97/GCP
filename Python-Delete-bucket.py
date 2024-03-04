@@ -1,3 +1,8 @@
+NOTE: 
+1. run cmnd: pip install google-cloud-storage
+
+-------------------------------------------------------------
+
 from google.cloud import storage
 
 def delete_bucket(bucket_name):
