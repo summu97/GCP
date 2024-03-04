@@ -2,7 +2,7 @@
 NOTE: 
 1. In "your_bucket_name" put bucket you want to list the files
 2. run cmnd: pip install google-cloud-storage
-
+3. python file_name.py
 ------------------------------------------------------------
 from google.cloud import storage
 
