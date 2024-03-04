@@ -33,4 +33,4 @@ for instance in instances:
     )
     stop_instance_request.result()
 
-    print(f'Restarted VM instance: {instance.name}')
+    print(f'Stopped VM instance: {instance.name}')
