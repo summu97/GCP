@@ -1,6 +1,6 @@
 NOTE:
 1. run cmnd: pip install google-cloud-storage
-
+2. python file_name.py
 -------------------------------------------------------------------
 from google.cloud import storage
 
