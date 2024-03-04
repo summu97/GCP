@@ -1,4 +1,7 @@
-
+NOTE: 
+1. pip install google-cloud-compute
+2. python file_name.py
+--------------------------------------------------------------
 open CLOUD SHELL-->Open Editor-->create folder-->vm_restart.py-->create file-->vm.py-->copy & paste below code-->create file-->key.json-->copy paste content of service account key
 open-new_terminal-->pip install google-cloud-compute-->cd vm_restart.py-->python vm_.py (you can see that your vm is stopped and started)
 NOTE:
