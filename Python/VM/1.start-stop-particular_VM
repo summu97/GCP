@@ -1,13 +1,13 @@
 from google.cloud import compute_v1
 import os
 
-PROJECT_ID = 'sumanth-project-01'
-ZONE = 'us-west4-b'
-VM_NAME = 'vm-c'
+PROJECT_ID = 'your project id'
+ZONE = 'your zone'
+VM_NAME = 'your vm name'
 
 compute_client = compute_v1.InstancesClient()
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "key.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "your key.json"
 
 
 instances = compute_client.list(
