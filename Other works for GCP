@@ -9,4 +9,4 @@ Q. Check the Python installations in your system.
    where python
 
 Q. To get the system configuration.
-   dxdiag
+   Windows + R ->> dxdiag
