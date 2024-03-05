@@ -1,0 +1,52 @@
+cmnd: pip install google-cloud-compute
+---------------------------------------------------------------------------------------------------------------
+
+from google.cloud import compute_v1
+import os
+
+PROJECT_ID = 'your project id'
+ZONE = 'your zone'
+VM_NAME = 'your-vm-name'  # Name of the specific VM
+
+# Set the environment variable for authentication
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "your key.json"
+
+compute_client = compute_v1.InstancesClient()
+
+def stop_vm(vm_name):
+  """Stops a specific virtual machine."""
+  try:
+    request = compute_v1.StopInstanceRequest(
+        project=PROJECT_ID,
+        zone=ZONE,
+        instance=vm_name
+    )
+    operation = compute_client.stop(request=request)
+    operation.result()
+    print(f'VM instance stopped: {vm_name}')
+  except Exception as e:
+    print(f'Error stopping VM {vm_name}: {e}')
+
+def start_vm(vm_name):
+  """Starts a specific virtual machine."""
+  try:
+    request = compute_v1.StartInstanceRequest(
+        project=PROJECT_ID,
+        zone=ZONE,
+        instance=vm_name
+    )
+    operation = compute_client.start(request=request)
+    operation.result()
+    print(f'VM instance started: {vm_name}')
+  except Exception as e:
+    print(f'Error starting VM {vm_name}: {e}')
+
+# Choose the desired action (stop or start)
+action = input("Enter 'stop' or 'start' to perform the action: ")
+
+if action == 'stop':
+  stop_vm(VM_NAME)
+elif action == 'start':
+  start_vm(VM_NAME)
+else:
+  print("Invalid action. Please enter 'stop' or 'start'.")
