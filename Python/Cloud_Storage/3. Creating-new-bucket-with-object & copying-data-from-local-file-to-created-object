@@ -1,1 +1,18 @@
+from google.cloud import storage
+import os
 
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "key.json"
+
+project_id = 'your project name' # GIVE IT
+bucket_name = 'your new bucket name' # GIVE IT
+
+storage_client = storage.Client()
+bucket = storage_client.bucket(bucket_name)
+bucket.location = 'us'
+bucket.create(project=project_id,location="us")
+print(f'Bucket {bucket_name} created.')
+
+#To upload objects to Bucket
+blob = bucket.blob("your_object_name") # GIVE IT
+with open('your source file name', 'rb') as file: #GIVE IT
+    blob.upload_from_file(file)
