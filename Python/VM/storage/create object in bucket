@@ -1,0 +1,17 @@
+from google.cloud import storage
+
+PROJECT_ID = "your-project-id"
+BUCKET_NAME = "your-bucket-name"
+
+storage_client = storage.Client(project=PROJECT_ID)
+
+# Define the object name (including any path within the bucket)
+object_name = "your new file name with path to create"  # Replace with your desired filename
+
+# Prepare the data you want to upload (can be string, bytes, or a file object)
+data = "This is some text data to upload."  # Replace with your actual data
+
+blob = storage_client.bucket(BUCKET_NAME).blob(object_name)
+blob.upload_from_string(data)
+
+print(f"Object '{object_name}' uploaded to bucket '{BUCKET_NAME}'.")
