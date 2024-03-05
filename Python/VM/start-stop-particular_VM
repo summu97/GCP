@@ -1,0 +1,24 @@
+from google.cloud import compute_v1
+import os
+ 
+compute_client = compute_v1.InstancesClient()
+ 
+project = 'your_project_ID'
+zone = 'your_zone'
+instance_name = 'your_vm_name'
+ 
+# Start VM instance
+def start_instance():
+    operation = compute_client.start(project=project, zone=zone, instance=instance_name)
+    print(f'Instance {instance_name} starting...')
+ 
+# Stop VM instance
+def stop_instance():
+    operation = compute_client.stop(project=project, zone=zone, instance=instance_name)
+    print(f'Instance {instance_name} stopping...')
+ 
+# Uncomment the line below to start the VM instance
+start_instance()
+ 
+# Uncomment the line below to stop the VM instance
+start_instance()
