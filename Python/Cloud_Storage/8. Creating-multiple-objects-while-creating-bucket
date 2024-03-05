@@ -1,0 +1,19 @@
+from google.cloud import storage
+import os
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "key.json"
+
+project_id = 'sumanth-project-01' # GIVE IT
+bucket_name = 'thjgfh' # GIVE IT
+
+storage_client = storage.Client()
+bucket = storage_client.bucket(bucket_name)
+bucket.location = 'us'
+bucket.create(project=project_id,location="us")
+print(f'Bucket {bucket_name} created.')
+
+for i in range(10):
+    blob = bucket.blob('object{}.txt'.format(i))
+    blob.upload_from_string('This is object {}.'.format(i))
+
+blobs = bucket.list_blobs()
