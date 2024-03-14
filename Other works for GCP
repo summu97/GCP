@@ -5,8 +5,8 @@ Q. Set Environment Paths for multiple python installations.
 Q. To know the default python version in windows.
    python --version
 
-Q. Check the Python installations in your system.
-   where python
+Q. Check the Python installations in your system(gives the path where it is installed).
+   which python
 
 Q. To get the system configuration.
    dxdiag
