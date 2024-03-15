@@ -1,0 +1,6 @@
+Create custom VPC with one or more SUBNETS with firewall rule-22
+create two VM's one with external-IP(bastion_host/Jump_server) & other without external-IP (Private_server)
+SSH to Bastion or connect to Bastion_host through Cloud shell
+follow following steps to connect to Private server:
+gcloud auth login (this will follow some steps and at the end it will print an "URL" copy and browse that URl. Follow the steps and at the end you will be given a key, copy that key and paste in terminal)
+gcloud compute ssh <private_host_name> --internal-ip --> enter (after clicking enter it will ask to select the region where the private_host is present, give it correct)
