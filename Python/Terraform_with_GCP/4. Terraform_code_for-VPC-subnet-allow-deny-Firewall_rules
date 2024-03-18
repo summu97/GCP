@@ -16,17 +16,31 @@ resource "google_compute_subnetwork" "custom_subnet" {
   ip_cidr_range = "10.0.1.0/24"  # Specify the CIDR range for your subnets
 }
 
-resource "google_compute_firewall" "example_firewall" {
-  name    = "allow-ssh-rdp-icmp"
+resource "google_compute_firewall" "allow_firewall" {
+  name    = "allow-ports"
   network = google_compute_network.custom_network.self_link
 
+  # Allow rules
   allow {
     protocol = "tcp"
-    ports    = ["22", "3389"]
+    ports    = ["22", "3389", "8080"]
   }
-
+  
   allow {
     protocol = "icmp"
+  }
+
+  source_ranges = ["0.0.0.0/0"]  # Allow traffic from any source
+}
+
+resource "google_compute_firewall" "deny_firewall" {
+  name    = "deny-ports"
+  network = google_compute_network.custom_network.self_link
+
+  # Deny rules
+  deny {
+    protocol = "tcp"
+    ports    = ["443", "1433"]
   }
 
   source_ranges = ["0.0.0.0/0"]  # Allow traffic from any source
