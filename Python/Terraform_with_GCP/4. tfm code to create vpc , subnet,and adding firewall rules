@@ -32,3 +32,22 @@ resource "google_compute_firewall" "example_firewall" {
   source_ranges = ["0.0.0.0/0"]  # Allow traffic from any source
 }
 =======================================================================
+THINGS TO KEEP IN MIND:
+
+a. key.json is your service account key 
+   required permissions are:
+     1. Compute Network Admin
+     2. Compute Security Admin
+     3. Service Account User
+ 
+b. project-id:
+    your project id
+
+c. region:
+    your required region
+
+d. vpc-network-name:
+
+e. subnet-name & region
+
+f. add firewall rules if needed and also change source range
