@@ -1,0 +1,33 @@
+provider "google" {
+  project = "your-billing-project-id"  # Use the project ID associated with your billing account
+  region  = "us-central1"  # Set your desired region
+}
+
+resource "google_project" "example_project" {
+  name            = "example-project"
+  project_id      = "example-project"
+  billing_account = "your-billing-account-id"  # Use the ID of your billing account
+}
+
+resource "google_project_service" "example_services" {
+  project = google_project.example_project.project_id
+  services = [
+    "compute.googleapis.com",
+    "storage.googleapis.com",
+    # Add other services you want to enable
+  ]
+}
+-----------------------------------------------------------------------------------------------
+
+###In this Terraform configuration:
+
+Replace "your-billing-project-id" with the project ID associated with your billing account.
+Set "your-billing-account-id" to the ID of your billing account.
+Adjust the region in the provider block to your desired region.
+Modify the name and project_id in the google_project resource block to your preferred project name and ID.
+After defining the Terraform configuration, follow these steps:
+
+Initialize Terraform with terraform init.
+Review the planned changes with terraform plan.
+If everything looks good, apply the changes with terraform apply.
+This setup will create a GCP project associated with your billing account, effectively creating a project without being tied to an organization. Note that this approach may have limitations and implications, so consider the requirements and implications carefully before proceeding.###
