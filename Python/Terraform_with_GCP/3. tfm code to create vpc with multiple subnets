@@ -1,0 +1,37 @@
+provider "google" {
+  credentials = file("key.json")
+  project = "project-id"
+  region  = "region"  # Specify your desired region
+}
+
+resource "google_compute_network" "custom_network" {
+  name                                      = "vpc-network-name"
+  auto_create_subnetworks                   = false
+}
+
+resource "google_compute_subnetwork" "custom_subnet" {
+ count         = 3
+  name          = "subnet-name-${count.index + 1}"
+  region        = "region"  # Specify the same region as the VPC
+  network       = google_compute_network.custom_network.self_link
+  ip_cidr_range = "10.0.${count.index}.0/24"  # Specify the CIDR range for your subnets
+}
+----------------------------------------------------------------
+THINGS TO KEEP IN MIND:
+
+a. key.json is your service account key 
+   required permissions are:
+     1. Compute Network Admin
+     2. Compute Security Admin
+     3. Service Account User
+ 
+b. project-id:
+    your project id
+
+c. region:
+    your required region
+
+d. vpc-network-name:
+
+e. subnet-name & region
+    
