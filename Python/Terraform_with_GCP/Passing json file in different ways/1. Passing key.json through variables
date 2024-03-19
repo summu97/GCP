@@ -1,0 +1,34 @@
+vim main.tf
+provider "google" {
+  credentials = file(var.google_credentials_file)
+  project     = "ringed-hallway-417305"
+  region      = "us-central1"
+}
+
+resource "google_storage_bucket" "example_bucket" {
+  name     = "terraform-state-bucket-0097" # Give your bucket name
+  location = "us-central1" # Specify any region
+}
+
+vim variables.tf
+
+provider "google" {
+  credentials = file(var.google_credentials_file)
+  project     = "ringed-hallway-417305"
+  region      = "us-central1"
+}
+
+resource "google_storage_bucket" "example_bucket" {
+  name     = "terraform-state-bucket-0097" # Give your bucket name
+  location = "us-central1" # Specify any region
+}
+
+or 
+vim variables.tf
+variable "google_credentials_file" {
+  description = "Path to Google Cloud service account credentials JSON file"
+}
+
+
+vim json.tfvars
+google_credentials_file = "/root/sumanth/path/to/json/key.json"
