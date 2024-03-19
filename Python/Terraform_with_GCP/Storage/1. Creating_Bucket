@@ -1,0 +1,12 @@
+# Provider configuration for Google Cloud Platform
+provider "google" {
+  credentials = file("key.json")  # Specify the path to your service account key file (make sure your service account key is present)
+  project     = "GIVE PROJECT ID"  # Specify your GCP project ID
+  region      = "ZONE"      # Specify your desired region
+}
+
+# Example resource - Create a Google Cloud Storage bucket
+resource "google_storage_bucket" "example_bucket" {
+  name     = "terraform-state-bucket-0097" # Give your bucket name
+  location = "us-central1" # Specify any region
+}
