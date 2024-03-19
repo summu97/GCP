@@ -1,0 +1,21 @@
+terraform {
+  backend "local" {
+    path = "sumo/tfm/terraform.tfstate"  # Store the state file in the current directory(path where you want to store state)
+  }
+}
+
+# Provider configuration for Google Cloud Platform
+provider "google" {
+  credentials = file("key.json")  # Specify the path to your service account key file
+  project     = "ringed-hallway-417305"  # Specify your GCP project ID
+  region      = "us-central1"      # Specify your desired region
+}
+
+# Example resource - Create a Google Cloud Storage bucket
+resource "google_storage_bucket" "example_bucket" {
+  name     = "terraform-state-bucket-0097"  # new file will be created by this name
+  location = "us-central1"
+}
+======================================
+roles needed in service account:
+storage admin
