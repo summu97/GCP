@@ -9,4 +9,4 @@ Q. Check the Python installations in your system(gives the path where it is inst
    which python
 
 Q. To get the system configuration.
-   dxdiag
+   Windows + R ->> dxdiag
