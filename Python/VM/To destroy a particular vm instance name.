@@ -1,0 +1,15 @@
+from googleapiclient.discovery import build
+
+compute = build('compute', 'v1')
+
+# Set the project ID and zone
+project_id = 'admin-416707'
+zone = 'us-central1-a'
+
+# Get the instance names
+instance_names = ['instance-20240320-093925','instance-20240320-125937']
+
+# Delete the instances
+for instance_name in instance_names:
+    compute.instances().delete(project=project_id, zone=zone, instance=instance_name).execute()
+    print(f'Deleted VM instance: {instance_name}')
