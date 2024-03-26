@@ -4,3 +4,63 @@ SSH to Bastion or connect to Bastion_host through Cloud shell
 follow following steps to connect to Private server:
 gcloud auth login (this will follow some steps and at the end it will print an "URL" copy and browse that URl. Follow the steps and at the end you will be given a key, copy that key and paste in terminal)
 gcloud compute ssh <private_host_name> --internal-ip --> enter (after clicking enter it will ask to select the region where the private_host is present, give it correct)
+----------------------------------------
+Create VPC with tcp:22
+Create two VM's one with external-ip and  internal-ip.
+roles required: 
+-> Compute Instance Admin (v1)
+-> Compute Network User
+-> Service Account User
+cmnds: gcloud compute ssh private --internal-ip
+================================================================
+create two VPC's with tcp:22
+create one VM in vpc-1 & two VM's in VPC-2( one with external-ip and  internal-ip).
+connect to VM in vpc-1 
+cmnd: gcloud compute ssh VM_vpc-2_name (to connect to bastion vm in vpc-2)
+now youre in vpc-2_vm
+cmnd: gcloud compute ssh private --internal-ip (to connect to private vm in vpc-2)
+=================================================================
+Uploading a JSON key File to a GCP Bastion-Host_VM-Instance & Setting Up Service Account authentication:
+
+steps:
+
+1. create a Custom VPC with 2-subnets (10.0.1.0/24 & 10.0.2.0/24)
+
+2. create a Bastion-Server-VM : goto compute engine -> create VM -> name of vm (bastion) -> region & zone(us-central-1a)
+                                ->access scopes --> Set access for each API -> comput engine (read/write) 
+                                ->Advanced options --> Networking -> N/W Tag (bash) 
+                                ->Network interfaces -> select custom vpc -> subnet1 (10.0.1.0/24) -> allow externalIPv4
+                                ->create VM
+
+3.Go IAM -> select the SA-compute-default -> edit -> add role -> compute engine admin, Compute Instance Admin (v1).
+
+4.Go to Firewall rules -> create firewall rule --> 
+
+--> firewall(1) : name (bastion-private) -> select the VPC N/W -> Targets-Specified target tags-> give your N/W tag of Bastion-VM
+                  -> source IPV4 ranges (0.0.0.0/0) -> Protocols and ports-Specified protocols and ports ->TCP [22] -> create
+
+--> --> firewall(1) : name (private-bastion)-> select the VPC N/W -> Targets-Specified target tags-> give your N/W tag of private VM 
+                      source filter select -> source tags : (bastion-VM N/W tag) -> Protocols and ports-Specified protocols and ports ->TCP [22] -> create
+
+5. Goto Service Account and Genreate key for ComputeEngineDefault-SA
+
+Verificatio:
+
+1. connect Bastion-VM to SSH -> create a Key.json file (vim key.json) -> copy and paste the SA-json key here,
+
+now type these commands:
+
+-->  export GOOGLE_APPLICATION_CREDENTIALS="/home/bastion-username/key.json"  (#to find user cmd-whoami)
+
+-->  gcloud compute ssh pvt --internal-ip 
+
+-----------------------------------------------------------------------------------------------------------------------
+
+->  Using Token connecting Bastion-host to Private host:
+
+connect Bastion-VM to SSH -> now type these commands:
+
+
+1. gcloud auth print-access-token
+2. export TOKEN= "copy and paste the token here"
+3. gcloud compute ssh pvt --internal-ip 
