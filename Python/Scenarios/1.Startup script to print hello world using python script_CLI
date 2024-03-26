@@ -1,0 +1,56 @@
+gcloud compute instances create INSTANCE_NAME \
+    --metadata=startup-script="$(cat startupscript.sh)" \
+    --tags=http-server
+---------------------------
+#! /bin/bash
+apt-get update
+apt-get install -y nginx
+service nginx start
+sed -i -- 's/nginx/Google Cloud Platform - '"$HOSTNAME"'/' /var/www/html/index.nginx-debian.html
+================================================================================
+
+Create a file -> vim startup-script.sh , paste the below script:
+
+sudo apt-get update
+sudo apt-get upgrade -y
+sudo apt-get install apache2 -y
+echo "with open('/var/www/html/index.html', 'w') as f:
+    f.write('<html><body><h1>Hello, world!</h1></body></html>\n')
+    f.write('<p>This is added using Python!</p>\n')" | sudo tee /root/file.py |sudo python3 /root/file.py | sudo tee /var/www/html/index.html
+----------------------------------------------------------------
+
+	#!/bin/bash
+
+	# Set the new bucket name
+
+	BUCKET_NAME="your-new-bucket-name"
+
+	# Create a new storage bucket
+
+	gcloud storage buckets create gs://$BUCKET_NAME
+
+	# Make the bucket publicly readable
+  
+	gsutil iam ch allUsers:objectViewer gs://$BUCKET_NAME
+
+	# Copy the new startup script to the bucket
+
+	gsutil cp startup-script.sh gs://$BUCKET_NAME/startup-script.sh
+---------------------------------------------------------------
+# Create a INSTANCE-TEMPLATE with the updated startup script URL
+
+
+gcloud compute instance-templates create TEMPLATE-NAME --machine-type=e2-standard-4 --image-family=debian-10 --image-project=debian-cloud --boot-disk-size=10GB --tags http-server 
+--metadata startup-script-url=gs://$BUCKET_NAME/startup-script.sh
+---------------------------------------------------------------
+
+# Create a INSTANCE-TEMPLATE with the startup script file in local 
+
+
+gcloud compute instance-templates create TEMPLATE-NAME --machine-type=e2-standard-4 --image-family=debian-10 --image-project=debian-cloud --boot-disk-size=10GB --tags http-server 
+--metadata startup-script="$(cat startup-script.sh)"
+---------------------------------------------------------------
+
+# Create a INSATANCE GROUP using the template
+
+gcloud compute instance-groups managed create my-instance-group --base-instance-name=my-instance --size=3 --template=example-template --zone=us-central1-a

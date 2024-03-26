@@ -1,0 +1,41 @@
+   Networking:
+
+   gcloud compute networks create VPC-NAME --subnet-mode=custom --description="vpc cli"
+   gcloud compute networks subnets create SUBNET-NAME --network=VPC-NAME --region=REGION --range=10.0.1.0/24
+   gcloud compute networks subnets create SUBNET-NAME --network=VPC-NAME --region=REGION --range=10.0.2.0/24
+
+
+   Service-Account:
+
+   gcloud iam service-accounts create NAME --description="cli created sa" --display-name="NAME"
+   gcloud iam service-accounts list
+
+   Roles:
+
+   gcloud projects add-iam-policy-binding PROJECT-ID --member=serviceAccount:SERVICE-ACCOUNT-ID --role=roles/compute.networkUser
+   gcloud projects add-iam-policy-binding PROJECT-ID --member=serviceAccount:SERVICE-ACCOUNT-ID --role=roles/compute.instanceAdmin.v1
+   gcloud projects add-iam-policy-binding PROJECT-ID --member=serviceAccount:SERVICE-ACCOUNT-ID --role=roles/editor
+
+
+   VM-Instance:
+
+   gcloud compute instances create VM-NAME --machine-type n1-standard-4 --zone ZONE --network VPC-NAME --subnet PUBLIC-SUBNET-NAME --tags N/W-TAG --service-account SERVICE-ACCOUNT-ID --scopes=https://www.googleapis.com/auth/compute
+   gcloud compute instances create VN-NAME --machine-type n1-standard-4 --zone ZONE --network VPC-NAME--subnet PRIVATE-SUBNET-NAME --tags N/W-TAG --service-account SERVICE-ACCOUNT-ID --no-address
+
+   Firewall:
+
+   gcloud compute firewall-rules create NAME --network=VPC-NAME --allow tcp:22 --target-tags=N/W-TAG-BASTION --source-ranges=0.0.0.0/0
+   gcloud compute firewall-rules create NAME --network=VPC-NAME --allow tcp:22 --target-tags=N/W-TAG-PRIVATE-VM --source-tags=N/W-TAG-BASTION
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
+
+   CONNECTION TO BASTION:
+
+   gcloud compute ssh BASTION-SERVER-NAME
+
+   CONNECTION from BASTION to PRIVATE:
+  
+   gcloud compute ssh PRIVATE-VM-NAME --internal-ip
+   ======================================================================
+
+   ======================================================================
