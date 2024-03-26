@@ -1,0 +1,86 @@
+
+
+
+
+
+Scenario: Delete instances from a different zone
+
+If you want to delete instances in a different zone, you need to modify the zone variable to the desired zone.
+
+zone = 'us-central1-b'
+
+for instance_name in instance_names:
+    compute.instances().delete(project=project_id, zone=zone, instance=instance_name).execute()
+    print(f'Deleted VM instance: {instance_name}')
+...................................................................................................................
+Scenario: Delete instances from multiple zones
+
+If you have instances in multiple zones and want to delete them all, you can modify the script to iterate through the zones and delete instances.
+
+zones = ['us-central1-a', 'us-central1-b', 'us-central1-c']
+
+for zone in zones:
+    for instance_name in instance_names:
+        compute.instances().delete(project=project_id, zone=zone, instance=instance_name).execute()
+        print(f'Deleted VM instance {instance_name} from zone {zone}')
+.......................................................................................................................
+
+Scenario: Delete instances based on a filter
+
+If you need to delete instances based on a filter (for example, instances with a specific label or a specific name pattern), you can modify the code to query the instances using the filter parameter and delete them.
+
+from googleapiclient.errors import HttpError
+
+def delete_instances_with_filter(compute, project_id, filter):
+    try:
+        request = compute.instances().list(project=project_id, filter=filter)
+        response = request.execute()
+
+        instances = response.get('items', [])
+
+        if instances:
+            for instance in instances:
+                instance_name = instance['name']
+                compute.instances().delete(project=project_id, zone=zone, instance=instance_name).execute()
+                print(f'Deleted VM instance: {instance_name}')
+        else:
+            print('No instances found with the specified filter.')
+
+    except HttpError as error:
+        print(f'An error occurred: {error}')
+
+# Set the filter to delete instances with the name pattern
+filter = 'name:instance-20240320*'
+delete_instances_with_filter(compute, project_id, filter)
+...............................................................................
+Senerio:
+Delete instances based on filters:----
+
+from googleapiclient.errors import HttpError
+
+def delete_instances_with_filter(compute, project_id, filter, zone):
+    try:
+        request = compute.instances().list(project=project_id, filter=filter)
+        response = request.execute()
+
+        instances = response.get('items', [])
+
+        if instances:
+            for instance in instances:
+                instance_name = instance['name']
+                compute.instances().delete(project=project_id, zone=zone, instance=instance_name).execute()
+                print(f'Deleted VM instance: {instance_name} in zone: {zone}')
+        else:
+            print(f'No instances found with the specified filter for zone: {zone}')
+
+    except HttpError as error:
+        print(f'An error occurred: {error}')
+
+# Set the filter to delete instances with specific names and zones
+instance_name_filter_list = [{'name': 'instance-20240320-093925', 'zone': 'us-central1-a'},
+                             {'name': 'instance-20240320-125937', 'zone': 'us-west1-a'}]
+
+for filter_config in instance_name_filter_list:
+    filter = f'name:{filter_config["name"]}'
+    zone = filter_config['zone']
+    delete_instances_with_filter(compute, project_id, filter, zone)
