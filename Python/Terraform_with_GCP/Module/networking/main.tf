@@ -1,3 +1,9 @@
+resource "google_project_service" "dns" {
+  project = "ringed-hallway-417305"
+
+  service = "dns.googleapis.com"
+}
+
 resource "google_compute_network" "custom_network" {
   name                    = "custom-vpc"
   auto_create_subnetworks = false
@@ -50,4 +56,12 @@ resource "google_compute_firewall" "app-ssh" {
 
   target_tags = ["app-server"]  # Apply to VMs with this tag
   source_ranges = ["0.0.0.0/0"]  # Allow traffic from any source
+}
+
+output "network_self_link" {
+  value = google_compute_network.custom_network.self_link
+}
+
+output "subnetwork_self_link" {
+  value = google_compute_subnetwork.dev.self_link
 }
