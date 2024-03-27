@@ -13,3 +13,7 @@ resource "google_project_iam_binding" "service_account_role_bindings" {
     "serviceAccount:${google_service_account.example_service_account.email}"
   ]
 }
+
+output "svc_email" {
+  value = google_service_account.example_service_account.email
+}
