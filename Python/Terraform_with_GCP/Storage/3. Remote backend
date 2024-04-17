@@ -1,0 +1,11 @@
+provider "google" {
+  project     = "ringed-hallway-417305"
+  region      = "us-east1-b"
+}
+
+terraform {
+  backend "gcs" {
+    bucket  = "adq-bucket-getteam"
+    prefix  = "terraform/state"
+  }
+}
