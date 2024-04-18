@@ -15,7 +15,7 @@ RUN:
 Attaching bucket:
 
 * mkdir sumanth
-* chmod 777 sumamnth
+* chmod 777 sumanth
 * gcsfuse bucket_name sumanth
 * df -h (you can see bucket mounted in sumanth folder)
 
@@ -27,3 +27,5 @@ No need of using gsutil to access any files or copy any files, you can simply co
 
 *To unmount bucket:
 fusermount -u /home/sumo1998sumanth/sumanth(/path/to/mount/point)
+
+You can create, delete files/folders:
