@@ -1,0 +1,29 @@
+Using Cloud Storage bucket along with VM as a File system:
+Here we use gcsfuse to attach storage to access files/folders in bucket, instead of disk we use storage.
+Step1: create vm
+step2: get gcsfuse from  "https://cloud.google.com/storage/docs/gcsfuse-install"
+Go through steps in it or follow:
+RUN:
+
+* export GCSFUSE_REPO=gcsfuse-`lsb_release -c -s`
+* echo "deb [signed-by=/usr/share/keyrings/cloud.google.asc] https://packages.cloud.google.com/apt $GCSFUSE_REPO main" | sudo tee /etc/apt/sources.list.d/gcsfuse.list
+* curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo tee /usr/share/keyrings/cloud.google.asc
+
+* sudo apt-get update
+* sudo apt-get install gcsfuse
+
+Attaching bucket:
+
+* mkdir sumanth
+* chmod 777 sumamnth
+* gcsfuse bucket_name sumanth
+* df -h (you can see bucket mounted in sumanth folder)
+
+Go to sumanth and ls (you can see files nd folders inside it)
+cp select/file /path/to/destination
+
+*what you can do?
+No need of using gsutil to access any files or copy any files, you can simply copy files directly from local
+
+*To unmount bucket:
+fusermount -u /home/sumo1998sumanth/sumanth(/path/to/mount/point)
