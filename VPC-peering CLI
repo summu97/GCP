@@ -1,0 +1,34 @@
+VPC-Peering CLI:
+
+Create two vpc's:
+gcloud compute networks create vpc-a --subnet-mode=custom --project=ringed-hallway-417305
+gcloud compute networks create vpc-b --subnet-mode=custom --project=ringed-hallway-417305
+
+Create subnets in each vpc:
+gcloud compute networks subnets create subnet-a --network=vpc-a --region=asia-east1 --range=10.0.3.0/24 --project=ringed-hallway-417305
+gcloud compute networks subnets create subnet-b --network=vpc-b --region=asia-east1 --range=10.0.2.0/24 --project=ringed-hallway-417305
+
+Create firewall rules:
+gcloud compute firewall-rules create firewall-a --allow=tcp:22,icmp --source-ranges=0.0.0.0/0 --network=vpc-a --project=ringed-hallway-417305
+gcloud compute firewall-rules create firewall-b --allow=tcp:22,icmp --source-ranges=0.0.0.0/0 --network=vpc-b --project=ringed-hallway-417305
+
+Create two instances:
+gcloud compute instances create instance-b --subnet=projects/ringed-hallway-417305/regions/asia-east1/subnetworks/subnet-b --project=ringed-hallway-417305 --zone=asia-east1-a
+gcloud compute instances create instance-a --subnet=projects/ringed-hallway-417305/regions/asia-east1/subnetworks/subnet-a --project=ringed-hallway-417305 --zone=asia-east1-a
+
+Peering connection:
+gcloud compute networks peerings create my-peering --network=vpc-a --peer-network=vpc-b --peer-project=ringed-hallway-417305 --project=ringed-hallway-417305
+gcloud compute networks peerings create my-peering --network=vpc-b --peer-network=vpc-a --peer-project=ringed-hallway-417305 --project=ringed-hallway-417305
+----------------------------------------------------------------
+                                                  :REFERENCE:
+
+gcloud compute networks create vpc-a --subnet-mode=custom --project=ethereal-shine-414914
+gcloud compute networks subnets create subnet1 --network=vpc-a --region=asia-south1 --range=10.0.1.0/24 --project=ethereal-shine-414914
+gcloud compute firewall-rules create firewall-a --allow=tcp:22,icmp --source-ranges=0.0.0.0/0 --network=vpc-a --project=ethereal-shine-414914
+gcloud compute networks create vpc-b --subnet-mode=custom --project=festive-magpie-415515
+gcloud compute networks subnets create subnet-b --network=vpc-b --region=asia-east1 --range=10.0.2.0/24 --project=festive-magpie-415515
+gcloud compute firewall-rules create firewall-b --allow=tcp:22,icmp --source-ranges=0.0.0.0/0 --network=vpc-b --project=festive-magpie-415515
+gcloud compute instances create instance-b --subnet=projects/festive-magpie-415515/regions/asia-east1/subnetworks/subnet-b --project=festive-magpie-415515 --zone=asia-east1-a
+gcloud compute instances create instance-a --subnet=projects/ethereal-shine-414914/regions/asia-south1/subnetworks/subnet-a --project=ethereal-shine-414914 --zone=asia-south1-a
+gcloud compute networks peerings create my-peering --network=vpc-a --peer-network=vpc-b --peer-project=festive-magpie-415515 --project=ethereal-shine-414914
+gcloud compute networks peerings create my-peering --network=vpc-b --peer-network=vpc-a --peer-project=ethereal-shine-414914 --project=festive-magpie-415515
