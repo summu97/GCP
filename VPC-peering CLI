@@ -19,6 +19,11 @@ gcloud compute instances create instance-a --subnet=projects/ringed-hallway-4173
 Peering connection:
 gcloud compute networks peerings create my-peering --network=vpc-a --peer-network=vpc-b --peer-project=ringed-hallway-417305 --project=ringed-hallway-417305
 gcloud compute networks peerings create my-peering --network=vpc-b --peer-network=vpc-a --peer-project=ringed-hallway-417305 --project=ringed-hallway-417305
+
+Deleting peering connection:
+gcloud compute networks peerings delete my-peering --network=vpc-b --project=ringed-hallway-417305
+gcloud compute networks peerings delete my-peering --network=vpc-a --project=ringed-hallway-417305
+
 ----------------------------------------------------------------
                                                   :REFERENCE:
 
